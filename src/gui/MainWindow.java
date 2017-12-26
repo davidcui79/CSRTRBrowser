@@ -6,33 +6,15 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Enumeration;
-
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JTree;
-import javax.swing.JMenuItem;
-import javax.swing.JToolBar;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.FontUIResource;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
+
 
 
 
@@ -42,57 +24,10 @@ public class MainWindow extends JFrame implements MainWindowAdapter {
 
 	private JPanel jContentPane = null;
 
-	private JScrollPane mainPane = null;
-
-	private JMenuBar appMenuBar = null;
-
-	private JMenu jMenuFile = null;
-
-	private JTree procTree = null;
-	
-
-	
-	private DefaultMutableTreeNode root = null;
-
-	private JMenuItem jMenuItemOpen = null;
-
-	private JToolBar toolBar = null;
-
-	private JTextField searchField = null;
-
-	private JButton searchPrev = null;
-
-	private JButton searchNext = null;
-	
 	File file = null;
-
-	private JMenuItem jMenuItemExit = null;
-
-	private JMenu jMenuHelp = null;
-
-	private JMenuItem jMenuItemAbout = null;
 
 	private JPanel centerPane;
 	
-	private JButton browseBut = null;
-
-	private JTextField trNumField;
-
-	/**
-	 * This method initializes mainPane	
-	 * 	
-	 * @return javax.swing.JScrollPane	
-	 */
-	private JScrollPane getMainPane() {
-		if (mainPane == null) {
-			mainPane = new JScrollPane();
-			jContentPane.setLayout(new BorderLayout());
-			jContentPane.add(getCenterPane(), BorderLayout.CENTER);
-			//mainPane.setViewportView(getProcTree());
-		}
-		return mainPane;
-	}
-
 	/**
 	 * This method initializes centerPane	
 	 * 	
@@ -110,38 +45,6 @@ public class MainWindow extends JFrame implements MainWindowAdapter {
 		return centerPane;
 	}
 
-	/**
-	 * This method initializes fileTxtField	
-	 * 	
-	 * @return javax.swing.JTextField	
-	 */
-	private JTextField getTRNumTextField() {
-		if (trNumField == null) {
-			trNumField = new JTextField();
-			trNumField.setEditable(true);
-		}
-		return trNumField;
-	}
-	
-	/**
-	 * This method initializes browseBut	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */
-	private JButton getBrowseBut() {
-		if (browseBut == null) {
-			browseBut = new JButton();
-			browseBut.setText("Browse");
-			browseBut.addActionListener(new ActionListener(){
-
-				public void actionPerformed(ActionEvent arg0) {
-					
-				}
-				
-			});
-		}
-		return browseBut;
-	}
 
 	public static void initGlobalFontSetting(Font fnt){
 		FontUIResource fontRes = new FontUIResource(fnt);
