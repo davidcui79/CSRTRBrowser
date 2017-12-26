@@ -95,7 +95,7 @@ public class MainWindow extends JFrame implements MainWindowAdapter {
 		//this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/asset/tree.png")));
 		//this.setJMenuBar(getAppMenuBar());
 		this.setContentPane(getJContentPane());
-		this.setTitle("TR Browser");
+		this.setTitle("CSR&TR Browser");
 	}
 
 	/**
