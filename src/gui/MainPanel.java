@@ -23,13 +23,19 @@ public class MainPanel extends JPanel implements KeyListener{
 
 	private static final long serialVersionUID = 1L;
 	private JLabel trLabel = null;
-	private JLabel csrLabel = null;
 	private JTextField trNumTxtField = null;
-	private JTextField csrNumTxtField = null;
 	private JButton trBrowserBut = null;
-	private JButton csrBrowserBut = null;
 	private JButton trLinkBut = null;
+	
+	private JLabel csrLabel = null;
+	private JTextField csrNumTxtField = null;
+	private JButton csrBrowserBut = null;
 	private JButton csrLinkBut = null;
+	
+	private JLabel csrhLabel = null;
+	private JTextField csrhNumTxtField = null;
+	private JButton csrhBrowserBut = null;
+	private JButton csrhLinkBut = null;
 	
 	/**
 	 * This is the default constructor
@@ -85,6 +91,29 @@ public class MainPanel extends JPanel implements KeyListener{
 		gridBagConstraintsTRLink.insets = new Insets(0, 0, 0, 0);
 		gridBagConstraintsTRLink.gridy = 0;
 		
+		GridBagConstraints gridBagConstraintsCSRHLabel = new GridBagConstraints();
+		gridBagConstraintsCSRHLabel.gridx = 0;
+		gridBagConstraintsCSRHLabel.insets = new Insets(0, 10, 0, 0);
+		gridBagConstraintsCSRHLabel.gridy = 2;
+		
+		
+		GridBagConstraints gridBagConstraintsCSRHNum = new GridBagConstraints();
+		gridBagConstraintsCSRHNum.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraintsCSRHNum.gridy = 2;
+		gridBagConstraintsCSRHNum.weightx = 1.0;
+		gridBagConstraintsCSRHNum.gridx = 1;
+		
+		GridBagConstraints gridBagConstraintsCSRHBrowser = new GridBagConstraints();
+		gridBagConstraintsCSRHBrowser.gridx = 2;
+		gridBagConstraintsCSRHBrowser.insets = new Insets(0, 0, 0, 10);
+//		gridBagConstraintsCSRHBrowser.ipadx = 100;
+		gridBagConstraintsCSRHBrowser.gridy = 2;
+		
+		GridBagConstraints gridBagConstraintsCSRHLink = new GridBagConstraints();
+		gridBagConstraintsCSRHLink.gridx = 3;
+		gridBagConstraintsCSRHLink.insets = new Insets(0, 0, 0, 0);
+		gridBagConstraintsCSRHLink.gridy = 2;
+		
 		GridBagConstraints gbCSRLink = new GridBagConstraints();
 		gbCSRLink.gridx = 3;
 		gbCSRLink.insets = new Insets(0, 0, 0, 0);
@@ -95,6 +124,9 @@ public class MainPanel extends JPanel implements KeyListener{
 		
 		csrLabel = new JLabel();
 		csrLabel.setText("CSR: ");
+		
+		csrhLabel = new JLabel();
+		csrhLabel.setText("CSRH: ");
 		
 		this.setSize(300, 200);
 		this.setLayout(new GridBagLayout());
@@ -109,6 +141,11 @@ public class MainPanel extends JPanel implements KeyListener{
 	    
 	    this.add(getTRLinkBut(), gridBagConstraintsTRLink);
 	    this.add(getCSRLinkBut(), gbCSRLink);
+	    
+	    this.add(csrhLabel, gridBagConstraintsCSRHLabel);
+	    this.add(getCSRHNumTxtField(), gridBagConstraintsCSRHNum);
+	    this.add(getCSRHBrowserBut(), gridBagConstraintsCSRHBrowser);
+	    this.add(getCSRHLinkBut(), gridBagConstraintsCSRHLink);
 	}
 
 	/**
@@ -123,6 +160,15 @@ public class MainPanel extends JPanel implements KeyListener{
 			trNumTxtField.addKeyListener(this);
 		}
 		return trNumTxtField;
+	}
+	
+	private JTextField getCSRHNumTxtField() {
+		if (csrhNumTxtField == null) {
+			csrhNumTxtField = new JTextField();
+			csrhNumTxtField.setEditable(true);
+			csrhNumTxtField.addKeyListener(this);
+		}
+		return csrhNumTxtField;
 	}
 	
 	/**
@@ -172,6 +218,19 @@ public class MainPanel extends JPanel implements KeyListener{
 		return csrBrowserBut;
 	}
 	
+	private JButton getCSRHBrowserBut() {
+		if (csrhBrowserBut == null) {
+			csrhBrowserBut = new JButton();
+			csrhBrowserBut.setText("Browser CSRH");
+			csrhBrowserBut.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					openCSRHBrowser();
+				}
+			});
+		}
+		return csrhBrowserBut;
+	}
+	
 	private JButton getTRLinkBut() {
 		if (trLinkBut == null) {
 			trLinkBut = new JButton();
@@ -197,6 +256,20 @@ public class MainPanel extends JPanel implements KeyListener{
 		}
 		return csrLinkBut;
 	}
+	
+	private JButton getCSRHLinkBut() {
+		if (csrhLinkBut == null) {
+			csrhLinkBut = new JButton();
+			csrhLinkBut.setText("Copy Link");
+			csrhLinkBut.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					copyCSRHLink();
+				}
+			});
+		}
+		return csrhLinkBut;
+	}
+	
 	protected void openTRBrowser(){
 		System.out.println("TRBrowse button clicked");
 		if(Desktop.isDesktopSupported())
@@ -229,6 +302,18 @@ public class MainPanel extends JPanel implements KeyListener{
 		}
 	}
 	
+	protected void openCSRHBrowser(){
+		if(Desktop.isDesktopSupported()) {
+			try {
+				Desktop.getDesktop().browse(new URI("https://csrh.prod.sdt.ericsson.se/f2/ticket/" + csrhNumTxtField.getText().trim()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	protected void copyTRLink(){
 		String url;
 		url = "<a href=\"https://mhweb.ericsson.se/TREditWeb/faces/oo/object.xhtml?eriref=" + trNumTxtField.getText().trim() + "\">";
@@ -243,6 +328,16 @@ public class MainPanel extends JPanel implements KeyListener{
 		String url;
 		url = "<a href=\"https://p40wd.ss.sw.ericsson.se/sap/bc/bsp/sap/crm_ui_start/default.htm?sap-client=450&crm-ui-action=b&crm-object-type=CRM_SRQM_INCIDENT&crm-object-keyname=OBJECT_ID&crm-object-value=" + csrNumTxtField.getText().trim() + "\">";
 		url += csrNumTxtField.getText().trim();
+		url += "</a>";
+		
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(new Hyperlink(url.toString()), null);
+	}
+	
+	protected void copyCSRHLink(){
+		String url;
+		url = "<a href=\"https://csrh.prod.sdt.ericsson.se/f2/ticket/" + csrhNumTxtField.getText().trim() + "\">";
+		url += csrhNumTxtField.getText().trim();
 		url += "</a>";
 		
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -266,6 +361,13 @@ public class MainPanel extends JPanel implements KeyListener{
 			if(e.getKeyCode() == KeyEvent.VK_ENTER){
 				System.out.println("CSR num Enter pressed, trigger Browse button click");
 				openCSRBrowser();
+				e.consume();
+			}
+		}
+		
+		if(e.getSource() == csrhNumTxtField){
+			if(e.getKeyCode() == KeyEvent.VK_ENTER){
+				openCSRHBrowser();
 				e.consume();
 			}
 		}
